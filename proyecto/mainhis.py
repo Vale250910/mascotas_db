@@ -1,0 +1,3 @@
+from historialmedico import HistorialMedico
+from menuhis import MenuHistorialMedico
+MenuHistorialMedico.menu_historial_medico()

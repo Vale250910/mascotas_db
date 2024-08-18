@@ -45,7 +45,7 @@ class Mascota:
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
             continue
- 
+        
     def get_nombre(self):
         return self.__nombre
 
@@ -100,35 +100,46 @@ class Mascota:
     def set_edad(self):
         while True:
             try:
-                edad = float(input('Edad de la mascota (años): '))
-                if 0 <= edad <= 80.0:
-                    self.__edad = edad
-                    break
-                else:
-                    print('Edad no válida')
-            except ValueError:
-                print('Edad acepta solo números.')
+                pref= input("Preferencias edad a=años,m=meses:")
+                if pref =='a':
+                    edad=float(input("Ingrese la edad entre 0 y 70 años:"))
+                    edad = float(edad)
+                    if edad >= 0 and edad <= 70:
+                        self.__edad = edad
+                        print(f"Edad establecida correctamente: {self.__edad} años")
+                        break
+                    else:
+                        edad = int(input("Ingrese una edad válida.."))
+                if pref =='m':
+                    edad=float(input("Ingrese la edad entre 0 y 840 meses:"))
+                    edad = float(edad)
+                    if edad >= 0 and edad <= 840:
+                        self.__edad = edad
+                        print(f"Edad establecida correctamente: {self.__edad} meses")
+                        break
+                    else:
+                        edad = int(input("Ingrese una edad válida: "))  
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
-                continue                
-
+                continue 
+    
     def get_peso(self):
         return self.__peso
-
+    
     def set_peso(self):
         while True:
             try:
-                peso = float(input('Peso en kg: '))
-                if (0.1 <= peso <= 1000.0):
+                peso = float(input('Ingrese el peso de la mascota (en kilogramos): '))
+                if 0.1 <= peso <= 100:
                     self.__peso = peso
                     break
                 else:
-                    print('Peso no válido')
+                    print('Peso incorrecto. Intente de nuevo')
             except ValueError:
-                print('El peso acepta solo números')
+                print('El peso debe ser un número.')
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
-                continue                 
+                continue
 
     def get_usuario(self):
         return self.__usuario
@@ -136,7 +147,7 @@ class Mascota:
     def set_usuario(self):
         while True:
             try:
-                usuario = int(input('Id usuario: '))
+                usuario = int(input('Ingrese el Id usuario: '))
                 if (0 <= usuario <= 1000000000):
                     self.__usuario = usuario
                     break
@@ -186,7 +197,41 @@ class Mascota:
             finally:
                 BaseDatos.desconectar()
     
-    def buscar_mascota(self, codigo_mascota=None):
+    def mostrar_todas_las_mascotas(self):
+        conexion = BaseDatos.conectar()
+        if conexion:
+            try:
+                cursor_mascota = conexion.cursor()
+                cursor_mascota.callproc('MostrarTodasLasMascotas')  # Asumiendo que tienes un procedimiento para mostrar todas las mascotas
+                print('Listado de todas las mascotas completado.')
+
+                mascota_encontrada = False
+                for result in cursor_mascota.stored_results():
+                    filas = result.fetchall()
+                    if filas:
+                        mascota_encontrada = True
+                        for datos in filas:
+                            print('Resultado:')
+                            print('****************************************************************************************************')
+                            print("\033[;36m" +
+                                f"| Codigo          :{datos[0]:<20}   | Nombre           :{datos[1]}  \n" +
+                                f"| Especie         :{datos[2]:<20}   | Raza             :{datos[3]}  \n" +
+                                f"| Edad            :{datos[4]:<20}   | Peso             :{datos[5]}  \n" +
+                                f"| Id_usuario      :{datos[6]:<20}  "
+                                '\033[0;m')
+                            print('****************************************************************************************************')
+                    else:
+                        print('No se encontraron resultados.')
+                if not mascota_encontrada:
+                    print("No se encontró el servicio proporcionado.")
+            except Exception as e:
+                print(f'Error al buscar servicio: {e}')
+            finally:
+                BaseDatos.desconectar()
+        return None
+
+    
+    def buscar_mascota_codigo(self, codigo_mascota=None):
         if codigo_mascota is None:
             self.set_codigo()
             codigo_mascota = self.__codigo
@@ -195,25 +240,66 @@ class Mascota:
         if conexion:
             try:
                 cursor_mascota = conexion.cursor()
-                cursor_mascota.callproc('BuscarMascota', [codigo_mascota])
+                cursor_mascota.callproc('BuscarMascotaCodigo', [codigo_mascota])
                 print('Búsqueda de mascota completada.')
                 for result in cursor_mascota.stored_results():
                     fila = result.fetchone()
                     while fila is not None:
                         print('Resultado:') # Si encontró  datos los imprime
-                        print('************************************************************************************************')
-                        print("\033[;36m"+f"Codigo:{fila[0]}, Nombre:{fila[1]}, Especie:{fila[2]}, Raza:{fila[3]}, Edad:{fila[4]}, Peso:{fila[5]}, Id_usuario:{fila[6]}"+'\033[0;m')
-                        print('*************************************************************************************************')
+                        print('**********************************************************************************************')
+                        print("\033[;36m" +
+                                f"| Codigo          :{fila[0]:<20}   | Nombre           :{fila[1]}  \n" +
+                                f"| Especie         :{fila[2]:<20}   | Raza             :{fila[3]}  \n" +
+                                f"| Edad            :{fila[4]:<20}   | Peso             :{fila[5]}  \n" +
+                                f"| Id_usuario      :{fila[6]:<20}  "
+                                '\033[0;m')
+                        print('**********************************************************************************************')
                         return fila
-                    fila = result.fetchone()
+                    fila = result.fetchall()
             except Exception as e:
                 print(f'Error al buscar la mascota: {e}')
             finally:
                 BaseDatos.desconectar()
         return None
+    
+    def buscar_mascota_nombre(self, nombre_mascota=None):
+        if nombre_mascota is None:
+            self.set_nombre()
+            nombre_mascota = self.__nombre
+
+        conexion = BaseDatos.conectar()
+        if conexion:
+            try:
+                cursor_mascota = conexion.cursor()
+                cursor_mascota.callproc('BuscarMascotaNombre', [nombre_mascota])
+                print('Búsqueda de mascota completada.')
+                mascota_encontrada = False
+                for result in cursor_mascota.stored_results():
+                    filas = result.fetchall()
+                    if filas:
+                        mascota_encontrada = True
+                        for datos in filas:
+                            print('Resultado:')
+                            print('****************************************************************************************************')
+                            print("\033[;36m" +
+                                f"| Codigo          :{datos[0]:<20}   | Nombre           :{datos[1]}  \n" +
+                                f"| Especie         :{datos[2]:<20}   | Raza             :{datos[3]}  \n" +
+                                f"| Edad            :{datos[4]:<20}   | Peso             :{datos[5]}  \n" +
+                                f"| Id_usuario      :{datos[6]:<20}  "
+                                '\033[0;m')
+                            print('****************************************************************************************************')
+                    else:
+                        print('No se encontraron resultados.')
+                if not mascota_encontrada:
+                    print("No se encontró el servicio proporcionado.")
+            except Exception as e:
+                print(f'Error al buscar servicio: {e}')
+            finally:
+                BaseDatos.desconectar()
+        return None
 
     def actualizar_mascota(self, codigo_mascota):
-        mascota_encontrada = self.buscar_mascota(codigo_mascota)
+        mascota_encontrada = self.buscar_mascota_codigo(codigo_mascota)
         if mascota_encontrada:
             print('Escriba los nuevos datos de la mascota:')
             self.set_nombre()
@@ -258,6 +344,7 @@ class Mascota:
             print('Mascota no encontrada. Intente otra vez')
 
     def eliminar_mascota(self, codigo_mascota):
+        
         conexion = BaseDatos.conectar()
         if conexion:
             try:
