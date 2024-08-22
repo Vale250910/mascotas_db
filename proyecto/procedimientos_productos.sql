@@ -28,46 +28,15 @@ CALL InsertarProducto(5,'COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50);
 
 DELIMITER //
 
-CREATE PROCEDURE BuscarProductoPorCodigo(
+CREATE PROCEDURE BuscarProductoCodigo(
     IN p_codigo INT
 )
 BEGIN
-    -- Variable para almacenar el resultado
-    DECLARE v_nombre VARCHAR(100);
-    DECLARE v_descripcion TEXT;
-    DECLARE v_precio DECIMAL(20, 2);
-    DECLARE v_stock SMALLINT;
-
-    -- Variable para comprobar si existe el producto
-    DECLARE v_count INT DEFAULT 0;
-
-    -- Contar el número de registros que coinciden
-    SELECT COUNT(*)
-    INTO v_count
-    FROM productos
-    WHERE codigo = p_codigo;
-
-    -- Comprobar si no se encontraron registros
-    IF v_count = 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'No se encontró el producto con el código especificado';
-    ELSE
-        -- Obtener los datos del producto
-        SELECT nombre, descripcion, precio, stock
-        INTO v_nombre, v_descripcion, v_precio, v_stock
-        FROM productos
-        WHERE codigo = p_codigo;
-
-        -- Devolver los resultados
-        SELECT v_nombre AS nombre,
-               v_descripcion AS descripcion,
-               v_precio AS precio,
-               v_stock AS stock;
-    END IF;
+    SELECT *FROM productos WHERE codigo = p_codigo;
 END //
 
 DELIMITER ;
-CALL BuscarProductoPorCodigo(1);
+CALL BuscarProductoCodigo(1);
 -- Buscar producto por el nombre
 
 DELIMITER //
