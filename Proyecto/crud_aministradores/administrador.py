@@ -1,25 +1,34 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import datetime
 from base_datos.conexion10 import BaseDatos
 from crud_usuarios.usuario import Usuario
-import datetime
 
 class Administrador(Usuario):
-    def __init__(self, cargo: str = None,fecha_ingreso: datetime.datetime = None, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, cargo: str = None, fecha_ingreso: datetime.datetime = None, **kwargs):
+        """
+        Inicializa una instancia de Administrador. Llama al constructor de Usuario
+        y luego inicializa los atributos específicos de Administrador.
+        """
+        super().__init__(**kwargs)  # Llama al constructor de la clase base Usuario
         self.__cargo = cargo
         self.__fecha_ingreso = fecha_ingreso
 
     def get_cargo(self):
+        """
+        Devuelve el cargo del administrador.
+        """
         return self.__cargo
 
     def set_cargo(self):
+        """
+        Permite al usuario ingresar el cargo del administrador, con validación para asegurar que el cargo tenga más de 3 caracteres.
+        """
         while True:
             try:
-                cargo = input('Cargo  del administrador: ')
+                cargo = input('Cargo del administrador: ')
                 if len(cargo) > 3:
-                    self.__cargo= cargo
+                    self.__cargo = cargo
                     break
                 else:
                     print('Cargo incorrecto. Intente de nuevo')
@@ -28,9 +37,16 @@ class Administrador(Usuario):
                 continue
     
     def get_fecha_ingreso(self):
+        """
+        Devuelve la fecha de ingreso del administrador.
+        """
         return self.__fecha_ingreso
     
     def set_fecha_ingreso(self):
+        """
+        Permite al usuario ingresar la fecha de ingreso del administrador en el formato YYYY-MM-DD,
+        con validación para asegurar que la fecha sea válida.
+        """
         while True:
             try:
                 fecha = input('Escriba la fecha de ingreso (YYYY-MM-DD): ')
@@ -44,12 +60,19 @@ class Administrador(Usuario):
                 continue
 
     def capturar_datos(self):
+        """
+        Captura todos los datos del administrador, llamando al método de captura de datos de la clase base
+        y luego solicitando los datos específicos del administrador.
+        """
         super().capturar_datos()  
         self.set_cargo()
         self.set_fecha_ingreso()
         
-
     def registrar_administradores(self):
+        """
+        Registra un nuevo administrador en la base de datos. Utiliza procedimientos almacenados para insertar los datos
+        y maneja excepciones para los errores que puedan ocurrir durante el proceso.
+        """
         self.capturar_datos()
         conexion = BaseDatos.conectar()
         if conexion:
@@ -73,6 +96,7 @@ class Administrador(Usuario):
                 conexion.commit()
                 print('Administrador registrado correctamente...')
                 
+                # Imprime los datos del administrador registrado
                 print('\nDatos del administrador registrados:')
                 print('------------------------------------------')
                 print(f'Id propietario: {self.get_id_usuario()}')
@@ -96,11 +120,15 @@ class Administrador(Usuario):
                 BaseDatos.desconectar()
                 
     def consultar_administradores(self):
+        """
+        Consulta y muestra todos los administradores en la base de datos. Utiliza procedimientos almacenados para obtener
+        la lista de administradores y maneja excepciones para los errores que puedan ocurrir.
+        """
         conexion = BaseDatos.conectar()
         if conexion:
             try:
                 cursor_administrador = conexion.cursor()
-                cursor_administrador.callproc('MostrarTodosAdministradores')  # Asumiendo que tienes un procedimiento para mostrar todas las mascotas
+                cursor_administrador.callproc('MostrarTodosAdministradores')  # Asumiendo que tienes un procedimiento para mostrar todos los administradores
                 print('Listado de todas los administradores completado.')
                 administrador_encontrado = False
                 for result in cursor_administrador.stored_results():
@@ -129,6 +157,10 @@ class Administrador(Usuario):
         return None
 
     def buscar_administrador_id(self, id_usuario=None):
+        """
+        Busca un administrador por su ID. Si no se proporciona un ID, se solicita al usuario que lo ingrese.
+        Muestra los detalles del administrador encontrado o un mensaje si no se encuentra.
+        """
         if id_usuario is None:
             self.set_id_usuario()
             id_usuario = self.get_id_usuario()
@@ -159,7 +191,7 @@ class Administrador(Usuario):
                             '\033[0;m')
                             print('**********************************************************************************************')
                             return fila
-                if not  administrador_encontrado:
+                if not administrador_encontrado:
                     print('El código de administrador proporcionado no existe.')
             except Exception as e:
                 print(f'Error al buscar administrador: {e}')
@@ -168,6 +200,9 @@ class Administrador(Usuario):
             return None
     
     def buscar_administrador_nombre(self, nombre):
+        """
+        Busca un administrador por su nombre. Muestra los detalles del administrador encontrado o un mensaje si no se encuentra.
+        """
         conexion = BaseDatos.conectar()
         if conexion:
             try:
@@ -201,11 +236,16 @@ class Administrador(Usuario):
                 BaseDatos.desconectar()
         return None
     
-    def actualizar_administrador(self,id_usuario):
+    def actualizar_administrador(self, id_usuario):
+        """
+        Actualiza la información de un administrador existente. Primero busca el administrador por ID, luego solicita
+        los nuevos datos y actualiza el registro en la base de datos.
+        """
         administrador_encontrado = self.buscar_administrador_id(id_usuario)
         if administrador_encontrado:
             print('Escriba los nuevos datos del administrador:')
             print('------------------------------------------')
+            # Solicita los nuevos datos
             self.set_nombre()
             self.set_apellido()
             self.set_ciudad()
@@ -219,19 +259,21 @@ class Administrador(Usuario):
             self.set_cargo()  
             self.set_fecha_ingreso()
             
+            # Obtiene los nuevos datos
             nuevo_nombre = self.get_nombre()
-            nuevo_apellido = self.get_apellido()  # Fixed variable name to 'nuevo_apellido'
+            nuevo_apellido = self.get_apellido()
             nueva_ciudad = self.get_ciudad()
             nueva_direccion = self.get_direccion()
             nuevo_telefono = self.get_telefono()
-            nuevo_es_propietario = self.get_es_propietario()  # Fixed variable name to 'nuevo_es_propietario'
-            nuevo_es_veterinario = self.get_es_veterinario()  # Fixed variable name to 'nuevo_es_veterinario'
-            nuevo_es_administrador = self.get_es_administrador()  # Fixed variable name to 'nuevo_es_administrador'
+            nuevo_es_propietario = self.get_es_propietario()
+            nuevo_es_veterinario = self.get_es_veterinario()
+            nuevo_es_administrador = self.get_es_administrador()
             nuevo_email = self.get_email()
             nuevo_contraseña = self.get_contraseña()
             nuevo_cargo = self.get_cargo()
             nuevo_fecha_ingreso = self.get_fecha_ingreso()
             
+            # Muestra los nuevos datos
             print('\n Datos del administrador actualizados:')
             print('------------------------------------------')
             print(f'Id propietario: {id_usuario}')
@@ -255,13 +297,13 @@ class Administrador(Usuario):
                     cursor_administrador.callproc('ActualizarAdministrador', [
                         id_usuario,
                         nuevo_nombre,
-                        nuevo_apellido,  # Ensure correct variable is passed
+                        nuevo_apellido,
                         nueva_ciudad,
                         nueva_direccion,
                         nuevo_telefono,
-                        nuevo_es_propietario,  # Ensure correct variable is passed
-                        nuevo_es_veterinario,  # Ensure correct variable is passed
-                        nuevo_es_administrador,  # Ensure correct variable is passed
+                        nuevo_es_propietario,
+                        nuevo_es_veterinario,
+                        nuevo_es_administrador,
                         nuevo_email,
                         nuevo_contraseña,
                         nuevo_cargo,
@@ -278,6 +320,10 @@ class Administrador(Usuario):
             print('Administrador no encontrado. Intente otra vez')
     
     def eliminar_administrador(self, id_usuario):
+        """
+        Elimina un administrador de la base de datos por su ID. Maneja las excepciones para los errores que puedan ocurrir
+        durante el proceso de eliminación.
+        """
         conexion = BaseDatos.conectar()
         if conexion:
             try:
@@ -289,4 +335,4 @@ class Administrador(Usuario):
                 print(f'Error al eliminar administrador: {e}')
                 conexion.rollback()
             finally:
-                BaseDatos.desconectar() 
+                BaseDatos.desconectar()
