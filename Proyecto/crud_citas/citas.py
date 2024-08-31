@@ -1,29 +1,20 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from base_datos.conexion10 import BaseDatos
 import datetime
+from base_datos.conexion10 import BaseDatos  # Importar la clase de conexión a la base de datos
 
+# Clase para manejar las citas en el sistema
 class Citas:
 
+    # Constructor de la clase
     def __init__(self,
-                codigo: int = None,
-                fecha: datetime.datetime = None,
-                hora: datetime.datetime= None,
-                id_servicio: int = None,
-                id_veterinario: int = None,
-                codigo_mascota: int = None,
-                estado: str = None):
-        """
-        Inicializa un objeto Citas con los atributos proporcionados.
-        :param codigo: Código de la cita.
-        :param fecha: Fecha de la cita.
-        :param hora: Hora de la cita.
-        :param id_servicio: ID del servicio asociado a la cita.
-        :param id_veterinario: ID del veterinario que atiende la cita.
-        :param codigo_mascota: Código de la mascota para la cual se realiza la cita.
-        :param estado: Estado de la cita (PENDIENTE, CONFIRMADA, CANCELADA, REALIZADA, NO ASISTIDA).
-        """
+                 codigo: int = None,
+                 fecha: datetime.datetime = None,
+                 hora: datetime.datetime = None,
+                 id_servicio: int = None,
+                 id_veterinario: int = None,
+                 codigo_mascota: int = None,
+                 estado: str = None):
         self.__codigo = codigo
         self.__fecha = fecha
         self.__hora = hora
@@ -32,52 +23,30 @@ class Citas:
         self.__codigo_mascota = codigo_mascota
         self.__estado = estado
 
+    # Métodos getter para obtener los atributos de la cita
     def get_codigo(self):
-        """
-        Retorna el código de la cita.
-        """
         return self.__codigo
 
     def get_fecha(self):
-        """
-        Retorna la fecha de la cita.
-        """
         return self.__fecha
 
     def get_hora(self):
-        """
-        Retorna la hora de la cita.
-        """
         return self.__hora
 
     def get_id_servicio(self):
-        """
-        Retorna el ID del servicio de la cita.
-        """
         return self.__id_servicio
     
     def get_id_veterinario(self):
-        """
-        Retorna el ID del veterinario de la cita.
-        """
         return self.__id_veterinario
 
     def get_codigo_mascota(self):
-        """
-        Retorna el código de la mascota de la cita.
-        """
         return self.__codigo_mascota
     
     def get_estado(self):
-        """
-        Retorna el estado de la cita.
-        """
         return self.__estado
 
+    # Métodos setter para ingresar y validar los atributos de la cita
     def set_estado(self):
-        """
-        Solicita al usuario que ingrese el estado de la cita y valida la entrada.
-        """
         while True:
             try:
                 estado = input('Escriba el estado de la cita (PENDIENTE, CONFIRMADA, CANCELADA, REALIZADA, NO ASISTIDA): ').lower()
@@ -90,9 +59,6 @@ class Citas:
                 print('El usuario ha cancelado la entrada de datos.')
 
     def set_fecha(self):
-        """
-        Solicita al usuario que ingrese la fecha de la cita y valida la entrada.
-        """
         while True:
             try:
                 fecha = input('Escriba la fecha de la cita (YYYY-MM-DD): ')
@@ -103,9 +69,6 @@ class Citas:
                 print('Formato de fecha inválido. Intente nuevamente.')
 
     def set_hora(self):
-        """
-        Solicita al usuario que ingrese la hora de la cita y valida la entrada.
-        """
         while True:
             try:
                 hora = input('Escriba la hora de la cita (HH:MM:SS): ')
@@ -116,9 +79,6 @@ class Citas:
                 print('Formato de hora inválido. Intente nuevamente.')
     
     def set_id_servicio(self):
-        """
-        Solicita al usuario que ingrese el ID del servicio y valida la entrada.
-        """
         while True:
             try:
                 id_servicio = int(input('Escriba el id del servicio: '))
@@ -133,9 +93,6 @@ class Citas:
                 print('El usuario ha cancelado la entrada de datos.')
 
     def set_id_veterinario(self):
-        """
-        Solicita al usuario que ingrese el ID del veterinario y valida la entrada.
-        """
         while True:
             try:
                 id_veterinario = int(input('Escriba el id del veterinario: '))
@@ -150,9 +107,6 @@ class Citas:
                 print('El usuario ha cancelado la entrada de datos.')
 
     def set_codigo_mascota(self):
-        """
-        Solicita al usuario que ingrese el código de la mascota y valida la entrada.
-        """
         while True:
             try:
                 codigo_mascota = int(input('Escriba el código de la mascota: '))
@@ -166,10 +120,8 @@ class Citas:
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
 
+    # Método para capturar todos los datos de la cita
     def capturar_datos(self):
-        """
-        Captura todos los datos necesarios para la cita a través de las funciones de entrada.
-        """
         self.set_fecha()
         self.set_hora()
         self.set_id_servicio()
@@ -177,10 +129,8 @@ class Citas:
         self.set_codigo_mascota()
         self.set_estado()
 
+    # Método para guardar la cita en la base de datos
     def guardar_cita(self):
-        """
-        Captura los datos de la cita y guarda la información en la base de datos.
-        """
         self.capturar_datos()
         
         conexion = BaseDatos.conectar()
@@ -201,9 +151,9 @@ class Citas:
                 print('------------------------------------------')
                 print(f'Fecha: {self.get_fecha()}')
                 print(f'Hora: {self.get_hora()}')
-                print(f'Id servicio:{self.get_id_servicio()}')
-                print(f'Id veterinario:{self.get_id_veterinario()}')
-                print(f'Codigo mascota:{self.get_codigo_mascota()}')
+                print(f'Id servicio: {self.get_id_servicio()}')
+                print(f'Id veterinario: {self.get_id_veterinario()}')
+                print(f'Codigo mascota: {self.get_codigo_mascota()}')
                 print(f'Estado: {self.get_estado()}')
             except Exception as e:
                 print(f'Error al registrar la cita: {e}')
@@ -211,11 +161,8 @@ class Citas:
             finally:
                 BaseDatos.desconectar()
 
+    # Método para buscar citas por fecha
     def buscar_cita_fecha(self, fecha=None):
-        """
-        Busca citas por fecha. Si no se proporciona una fecha, solicita al usuario que la ingrese.
-        :param fecha: Fecha para buscar la cita. Si es None, se solicita al usuario que ingrese una fecha.
-        """
         if fecha is None:
             self.set_fecha()
             fecha = self.__fecha
@@ -235,7 +182,6 @@ class Citas:
                     if filas:
                         cita_encontrada = True
                         for datos in filas:
-                            # Asegúrate de que la fecha y hora sean del tipo correcto
                             fecha_cita = datos[1] if isinstance(datos[1], datetime.date) else str(datos[1])
                             hora_cita = datos[2] if isinstance(datos[2], datetime.time) else str(datos[2])
                             
@@ -257,11 +203,8 @@ class Citas:
                 BaseDatos.desconectar()
         return None
     
+    # Método para buscar citas por código
     def buscar_cita_id(self, codigo=None):
-        """
-        Busca una cita por código. Si no se proporciona un código, solicita al usuario que lo ingrese.
-        :param codigo: Código de la cita a buscar. Si es None, se solicita al usuario que ingrese el código.
-        """
         if codigo is None:
             self.get_codigo()
             codigo = self.__codigo
@@ -277,18 +220,18 @@ class Citas:
                     if fila:
                         cita_encontrada = True
                         while fila is not None:
-                                # Asegúrate de que la fecha y hora sean del tipo correcto
-                                fecha_cita = fila[1] if isinstance(fila[1], datetime.date) else str(fila[1])
-                                hora_cita = fila[2] if isinstance(fila[2], datetime.time) else str(fila[2])
-                                print('Resultado:')
-                                print('**********************************************************************************************')
-                                print("\033[;36m" +
-                                    f"| Codigo             :{fila[0]:<20}   | Fecha           :{fecha_cita} \n" +
-                                    f"| Hora               :{hora_cita:<20}   | Id_servicio    :{fila[3]}  \n" +
-                                    f"| Id_veterinario     :{fila[4]:<20}   | Código mascota  :{fila[5]:<20}\n" +
-                                    f"| Estado             :{fila[6]:<20}   |\033[0m" +  # Resetear el color al final de la línea
-                                    '\033[0;m')
-                                return fila
+                            fecha_cita = fila[1] if isinstance(fila[1], datetime.date) else str(fila[1])
+                            hora_cita = fila[2] if isinstance(fila[2], datetime.time) else str(fila[2])
+                            print('Resultado:')
+                            print('**********************************************************************************************')
+                            print("\033[;36m" +
+                                f"| Codigo             :{fila[0]:<20}   | Fecha           :{fecha_cita} \n" +
+                                f"| Hora               :{hora_cita:<20}   | Id_servicio    :{fila[3]}  \n" +
+                                f"| Id_veterinario     :{fila[4]:<20}   | Código mascota  :{fila[5]:<20}\n" +
+                                f"| Estado             :{fila[6]:<20}   |\033[0m" +  # Resetear el color al final de la línea
+                                '\033[0;m')
+                            print('**********************************************************************************************')
+                            return fila
                 if not cita_encontrada:
                     print("No se encontraron citas para el código proporcionado.")
             except Exception as e:
@@ -297,10 +240,8 @@ class Citas:
                 BaseDatos.desconectar()
         return None
 
+    # Método para buscar todas las citas
     def buscar_citas(self):
-        """
-        Busca y muestra todas las citas almacenadas en la base de datos.
-        """
         conexion = BaseDatos.conectar()
         if conexion:
             try:
@@ -313,7 +254,6 @@ class Citas:
                     if fila:
                         cita_encontrada = True
                         for datos in fila:
-                            # Asegúrate de que la fecha y hora sean del tipo correcto
                             fecha_cita = datos[1] if isinstance(datos[1], datetime.date) else str(datos[1])
                             hora_cita = datos[2] if isinstance(datos[2], datetime.time) else str(datos[2])
                             print('Resultado:')
@@ -327,18 +267,15 @@ class Citas:
                             print('**********************************************************************************************')
 
                 if not cita_encontrada:
-                    print("No se encontraron las citas proporcionadas.")
+                    print("No se encontraron citas.")
             except Exception as e:
-                print(f'Error al buscar cita: {e}')
+                print(f'Error al buscar citas: {e}')
             finally:
                 BaseDatos.desconectar()
         return None
 
+    # Método para actualizar una cita existente
     def actualizar_cita(self, codigo):
-        """
-        Actualiza la información de una cita existente.
-        :param codigo: Código de la cita a actualizar.
-        """
         cita_encontrada = self.buscar_cita_id(codigo)
         if cita_encontrada:
             print('Escriba los nuevos datos de la cita:')
@@ -354,7 +291,7 @@ class Citas:
             nuevo_hora = self.get_hora() 
             nuevo_id_servicio = self.get_id_servicio()
             nuevo_id_veterinario = self.get_id_veterinario()
-            nuevo_codigo_mascota = self.get_codigo_mascota()
+            nuevo_codigo_mascota = self.get_codigo_mascota()  
             nueva_estado = self.get_estado()
             
             print('\n Datos de la cita actualizados:')
@@ -362,9 +299,9 @@ class Citas:
             print(f'Codigo cita: {codigo}')
             print(f'Nueva fecha: {nuevo_fecha}')
             print(f'Nueva hora: {nuevo_hora}')
-            print(f'Nuevo Id servicio:{nuevo_id_servicio}')
-            print(f'Nuevo Id veterinario:{nuevo_id_veterinario}')
-            print(f'Nuevo Codigo mascota:{nuevo_codigo_mascota}')
+            print(f'Nuevo Id servicio: {nuevo_id_servicio}')
+            print(f'Nuevo Id veterinario: {nuevo_id_veterinario}')
+            print(f'Nuevo Codigo mascota: {nuevo_codigo_mascota}')
             print(f'Nuevo estado: {nueva_estado}')
 
             conexion = BaseDatos.conectar()
@@ -390,11 +327,8 @@ class Citas:
         else:
             print('Cita no encontrada. Intente otra vez')
 
+    # Método para eliminar una cita
     def eliminar_cita(self, codigo):
-        """
-        Elimina una cita existente en la base de datos.
-        :param codigo: Código de la cita a eliminar.
-        """
         conexion = BaseDatos.conectar()
         if conexion:
             try:
