@@ -1,0 +1,47 @@
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Ignorar archivos de log
+*.log
+
+# Ignorar archivos de configuración de VSCode
+.vscode/
+
+# Ignorar la carpeta específica mencionada
+/ignorar
+
+# Ignorar el archivo específico mencionado
+ignorar.txt
+
+# Ignorar archivos de base de datos SQLite (si los estás usando)
+*.sqlite3
+
+# Ignorar archivos temporales
+*.tmp
+
+# Ignorar archivos de respaldo
+*.bak
+
+# Ignorar archivos de entorno virtual (si estás usando uno)
+venv/
+env/
+
+# Ignorar archivos de IDE específicos (además de .vscode que ya está incluido)
+.idea/
+*.swp
+*.swo
+
+# Ignorar archivos de compilación
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.exe
+
+# Ignorar archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+/ignorar.txt
