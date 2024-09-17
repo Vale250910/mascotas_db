@@ -13,6 +13,7 @@ CREATE PROCEDURE InsertarPropietario(
     IN p_es_administrador BOOLEAN,
     IN p_email VARCHAR(100),
     IN p_contraseña VARCHAR(255),
+    IN estado_acceso enum ('ACTIVO','INACTIVO'),
     IN p_barrio VARCHAR(100)
 )
 BEGIN
@@ -20,8 +21,8 @@ BEGIN
     IF EXISTS (SELECT 1 FROM usuarios WHERE id_usuario = p_id_usuario) THEN
         SELECT 'Usuario ya existe en la tabla usuarios';
     ELSE
-        INSERT INTO usuarios (id_usuario, nombre, apellido, ciudad, direccion, telefono, es_propietario, es_veterinario, es_administrador, email, contraseña)
-        VALUES (p_id_usuario, p_nombre, p_apellido, p_ciudad, p_direccion, p_telefono, p_es_propietario, p_es_veterinario, p_es_administrador, p_email, p_contraseña);
+        INSERT INTO usuarios (id_usuario, nombre, apellido, ciudad, direccion, telefono, es_propietario, es_veterinario, es_administrador, email, contraseña,estado_acceso)
+        VALUES (p_id_usuario, p_nombre, p_apellido, p_ciudad, p_direccion, p_telefono, p_es_propietario, p_es_veterinario, p_es_administrador, p_email, p_contraseña,estado_acceso);
     END IF;
 
     -- Intentar insertar en la tabla administradores

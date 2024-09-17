@@ -8,11 +8,12 @@ apellido VARCHAR(30) NOT NULL,
 ciudad VARCHAR(50) NOT NULL,
 direccion VARCHAR(100) NOT NULL,
 telefono VARCHAR(20) NOT NULL,
-es_propietario BOOLEAN DEFAULT FALSE,
-es_veterinario BOOLEAN DEFAULT FALSE,
-es_administrador BOOLEAN DEFAULT FALSE,
+es_propietario SMALLINT DEFAULT FALSE,
+es_veterinario SMALLINT DEFAULT FALSE,
+es_administrador SMALLINT DEFAULT FALSE,
 email VARCHAR(100) NOT NULL UNIQUE,
-contraseña VARCHAR(255) NOT NULL
+contraseña VARCHAR(255) NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
 );
 
 CREATE TABLE administradores (
@@ -42,50 +43,55 @@ ON UPDATE NO ACTION
 );
 
 CREATE TABLE mascotas (
-codigo INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+codigo INT UNSIGNED PRIMARY KEY NOT NULL,
 nombre VARCHAR (100) NOT NULL,
 especie VARCHAR (100) NOT NULL,
 raza VARCHAR (100) NOT NULL,
 edad DECIMAL (10,2) NOT NULL,
 peso DECIMAL (10,2) NOT NULL,
 id_usuario INT UNSIGNED NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
 FOREIGN KEY (id_usuario) references propietarios(id_usuario)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 );
 CREATE TABLE historiales_medicos(
-codigo INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+codigo INT UNSIGNED  NOT NULL ,
 fecha DATE NOT NULL,
 descripcion TEXT,
 tratamiento TEXT,
 codigo_mascota INT UNSIGNED NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
 PRIMARY KEY(codigo,codigo_mascota),
 FOREIGN KEY (codigo_mascota) REFERENCES mascotas(codigo)
 );
 CREATE TABLE servicios(
-codigo INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+codigo INT UNSIGNED NOT NULL PRIMARY KEY ,
 nombre VARCHAR(100)NOT NULL,
 descripcion TEXT,
-precio DECIMAL (20,2)NOT NULL
+precio DECIMAL (20,2)NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
 );
 CREATE TABLE citas(
-codigo INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+codigo INT UNSIGNED NOT NULL PRIMARY KEY ,
 fecha DATE NOT NULL,
 hora TIME,
 id_servicio INT UNSIGNED NOT NULL,
 id_veterinario INT UNSIGNED NOT NULL,
 codigo_mascota INT UNSIGNED NOT NULL,
 estado ENUM('PENDIENTE', 'CONFIRMADA', 'CANCELADA', 'REALIZADA', 'NO_ASISTIDA') NOT NULL DEFAULT 'PENDIENTE',
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
 FOREIGN KEY (id_servicio) REFERENCES servicios(codigo),
 FOREIGN KEY (id_veterinario) REFERENCES veterinarios(id_usuario),
 FOREIGN KEY (codigo_mascota) REFERENCES mascotas(codigo)
 );
 CREATE TABLE productos(
-    codigo INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    codigo INT UNSIGNED NOT NULL PRIMARY KEY,
     nombre VARCHAR(100),
     descripcion TEXT(100),
     precio DECIMAL(10,2), -- Especificar precisión y escala
-    stock SMALLINT UNSIGNED NOT NULL
+    stock SMALLINT UNSIGNED NOT NULL,
+    estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
 );
 
 INSERT INTO usuarios (id_usuario, nombre, apellido, ciudad, direccion, telefono, es_propietario, es_veterinario, es_administrador, email, contraseña) VALUES
@@ -108,10 +114,11 @@ INSERT INTO propietarios (id_usuario,barrio) VALUES
 (110,'SAN MATEO');
 SELECT * FROM propietarios;
 
-INSERT INTO mascotas (nombre, especie, raza, edad, peso, id_usuario) VALUES
-('MELSO', 'PERRO', 'BULL DOG', 5.00, 12.00, 101),
-('PULGAS', 'PERRO', 'FRENCH PULGA', 4.00, 3.00, 101),
-('PELROJO', 'GATO', 'CRILLO COLOMBIANO', 2.00, 2.00, 106);
+INSERT INTO mascotas (codigo, nombre, especie, raza, edad, peso, id_usuario)
+VALUES
+(1, 'Firulais', 'Perro', 'Pastor Alemán', 5, 30.5, 101),
+(2, 'Mishi', 'Gato', 'Siames', 3, 5.2, 104),
+(3, 'Bunny', 'Conejo', 'Mini Lop', 2, 1.8, 106);
 SELECT * FROM mascotas;
 
 INSERT INTO administradores (id_usuario, cargo, fecha_ingreso) VALUES
@@ -131,36 +138,32 @@ INSERT INTO veterinarios (id_usuario, especialidad, horario) VALUES
 
 SELECT * FROM veterinarios;
 
-INSERT INTO servicios (nombre, descripcion, precio) VALUES
-('Consulta General', 'Consulta veterinaria general', 50000.00),
-('Vacunación', 'Aplicación de vacunas', 35000.00),
-('Desparasitación', 'Tratamiento antiparasitario', 30000.00),
-('Cirugía', 'Procedimiento quirúrgico', 200000.00),
-('Peluquería', 'Servicio de peluquería para mascotas', 40000.00);
+INSERT INTO servicios (codigo, nombre, descripcion, precio)
+VALUES
+(1, 'Vacunación', 'Aplicación de vacunas básicas', 50.00),
+(2, 'Consulta General', 'Revisión médica completa', 30.00),
+(3, 'Cirugía Menor', 'Procedimientos quirúrgicos de bajo riesgo', 200.00);
 SELECT * FROM servicios;
 
-INSERT INTO citas (fecha, hora, id_servicio, id_veterinario, codigo_mascota, estado) VALUES
-('2024-08-20', '10:00:00', 1, 105, 1, 'CONFIRMADA'),
-('2024-08-21', '11:00:00', 2, 106, 2, 'PENDIENTE'),
-('2024-08-22', '12:00:00', 3, 107, 3, 'CANCELADA'),
-('2024-08-23', '09:00:00', 4, 108, 1, 'REALIZADA'),
-('2024-08-24', '14:00:00', 5, 109, 2, 'NO_ASISTIDA');
+INSERT INTO citas (codigo, fecha, hora, id_servicio, id_veterinario, codigo_mascota)
+VALUES
+(1, '2023-09-10', '10:00:00', 1,105 ,1 ),
+(2, '2023-09-15', '14:00:00', 2,105, 2),
+(3, '2023-09-20', '09:30:00', 3, 107,3 );
 SELECT*FROM citas;
 
-INSERT INTO historiales_medicos ( fecha, descripcion, tratamiento, codigo_mascota) VALUES
-('2024-07-01', 'Revisión general', 'Administrar antiparasitarios', 1),
-('2024-07-10', 'Vacunación', 'Vacuna contra la rabia aplicada', 2),
-('2024-07-15', 'Cirugía menor', 'Extracción de quiste', 3),
-('2024-08-05', 'Consulta por alergias', 'Administrar antihistamínicos', 1),
-('2024-08-10', 'Consulta de control', 'Chequeo general', 2);
+INSERT INTO historiales_medicos (codigo, fecha, descripcion, tratamiento, codigo_mascota)
+VALUES
+(1, '2023-09-01', 'Vacuna antirrábica aplicada', 'Descanso y monitoreo de 24 horas', 1),
+(2, '2023-08-15', 'Desparasitación', 'Administrar medicamento por 5 días', 2),
+(3, '2023-07-22', 'Revisión general', 'Dieta controlada', 3);
 SELECT*FROM historiales_medicos;
 
-INSERT INTO productos (nombre, descripcion, precio, stock) VALUES
-('Alimento para Perro', 'Alimento balanceado para perros adultos', 45000.00, 50),
-('Alimento para Gato', 'Alimento balanceado para gatos adultos', 50000.00, 40),
-('Juguete para Perro', 'Pelota resistente para perros', 15000.00, 100),
-('Collar Antipulgas', 'Collar para prevención de pulgas y garrapatas', 35000.00, 75),
-('Arena para Gatos', 'Arena higiénica para gatos', 20000.00, 60);
+INSERT INTO productos (codigo, nombre, descripcion, precio, stock)
+VALUES
+(1, 'Alimento para perros', 'Alimento premium para perros adultos', 25.99, 50),
+(2, 'Juguete para gatos', 'Juguete interactivo con plumas', 9.99, 100),
+(3, 'Collar antipulgas', 'Collar para eliminar y prevenir pulgas', 15.50, 30);
 SELECT * FROM productos;
 -- inner join
 
