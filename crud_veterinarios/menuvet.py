@@ -10,17 +10,29 @@ class MenuVeterinario:
             print('*************** MENU VETERINARIOS ********************')
             print('    1- Registrar nuevo veterinario')
             print('    2- Consultar veterinarios')
+<<<<<<< HEAD
             print('    3- Consultar veterinario por Numero de Documento')
             print('    4- Consultar veterinario por nombre')
             print('    5- Activar o Inactivar veterinario')
             print('    6- Actualizar un veterinario')
             print('    7- Eliminar un veterinario')
             print('    8- Salir del sistema')
+=======
+            print('    3- Consultar veterinario por ID')
+            print('    4- Consultar veterinario por nombre')
+            print('    5- Actualizar un veterinario')
+            print('    6- Eliminar un veterinario')
+            print('    7- Salir del sistema')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             print('*************** MENU VETERINARIOS ********************')
             opcion = input('Seleccione una opción: ')
             os.system("pause")
             os.system("cls")
+<<<<<<< HEAD
             if opcion == '8':
+=======
+            if opcion == '7':
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('Gracias por usar nuestra app..')
                 os.system("pause")
                 os.system("cls")
@@ -50,9 +62,15 @@ class MenuVeterinario:
                 
                 print('    3. Consultar Veterinario Por ID -->')
                 print('****************************************************************')
+<<<<<<< HEAD
                 n_documento= input("Escriba el numero documento del veterinario a buscar: ")
                 veterinario1 = Veterinario() 
                 veterinario1.buscar_veterinario_id(n_documento)
+=======
+                id_usuario= input("Escriba el id del veterinario a buscar: ")
+                veterinario1 = Veterinario() 
+                veterinario1.buscar_veterinario_id(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 
                 os.system("pause")
                 os.system("cls")
@@ -69,17 +87,27 @@ class MenuVeterinario:
                 os.system("cls")
             
             elif opcion == '5':
+<<<<<<< HEAD
 
                 print('   5. Activar  o Inactivar Veterinario  -->')
                 print('****************************************************************')
                 n_documento = input('Ingrese el numero documento del veterinario a activar o inactivar: ')
                 veterinario1 = Veterinario() 
                 veterinario1.actualizar_estado_administrador(n_documento)
+=======
+                
+                print('   5. Actualizar Veterinario -->')
+                print('****************************************************************')
+                id_usuario = int(input('Ingrese el id del veterinario a actualizar: '))
+                veterinario1 = Veterinario() 
+                veterinario1.actualizar_veterinario(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 os.system("pause")
                 os.system("cls")
             
             elif opcion == '6':
                 
+<<<<<<< HEAD
                 print('   6. Actualizar Veterinario -->')
                 print('****************************************************************')
                 n_documento = input('Ingrese el numero documento del veterinario a actualizar: ')
@@ -95,6 +123,13 @@ class MenuVeterinario:
                 n_documento= input('Ingrese el id del veterinario a eliminar: ')
                 veterinario1 = Veterinario() 
                 veterinario1.eliminar_veterinario(n_documento)
+=======
+                print('    6. Eliminar Veterinario -->')
+                print('****************************************************************')
+                id_usuario= int(input('Ingrese el id del veterinario a eliminar: '))
+                veterinario1 = Veterinario() 
+                veterinario1.eliminar_veterinario(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 
                 os.system("pause")
                 os.system("cls")

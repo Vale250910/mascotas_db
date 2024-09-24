@@ -12,15 +12,25 @@ class MenuProductos:
             print('         2- Consultar productos ')
             print('         3- Consultar productos por codigo ')
             print('         4- Consultar productos por nombre ')
+<<<<<<< HEAD
             print('         5- Activar O Inactivar productos ')
             print('         6- Actualizar productos ')
             print('         7- Eliminar productos ')
             print('         8- Salir')
+=======
+            print('         5- Actualizar productos ')
+            print('         6- Eliminar productos ')
+            print('         7- Salir')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             print('*************** MENU Productos ********************')
             opcion = input('Seleccione una opción: ')
             os.system("pause")
             os.system("cls")
+<<<<<<< HEAD
             if opcion == '8':
+=======
+            if opcion == '7':
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('Gracias por usar nuestra app..')
                 os.system("pause")
                 os.system("cls")
@@ -46,7 +56,11 @@ class MenuProductos:
             elif opcion == '3':
                 print('         3. Consultar Productos Por Codigo -->')
                 print('****************************************************************')
+<<<<<<< HEAD
                 codigo= input("Escriba el codigo del producto: ")
+=======
+                codigo= int(input("Escriba el codigo del producto: "))
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 productos1 = Productos()
                 productos1.buscar_producto_por_codigo(codigo)
                 os.system("pause")
@@ -63,6 +77,7 @@ class MenuProductos:
                 os.system("cls")
             
             elif opcion == '5':
+<<<<<<< HEAD
 
                 print('         5. Activar O Inactivar Productos -->')
                 print('****************************************************************')
@@ -77,16 +92,30 @@ class MenuProductos:
                 print('         6. Actualizar Productos -->')
                 print('****************************************************************')
                 codigo= input('Ingrese el codigo del producto a actualizar: ')
+=======
+                
+                print('         5. Actualizar Productos -->')
+                print('****************************************************************')
+                codigo= int(input('Ingrese el codigo del producto a actualizar: '))
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 productos1 = Productos()
                 productos1.actualizar_producto(codigo)
                 os.system("pause")
                 os.system("cls")
                 
+<<<<<<< HEAD
             elif opcion == '7':
                 
                 print('         7. Eliminar Productos -->')
                 print('****************************************************************')
                 codigo= input("Escriba el codigo del producto: ")
+=======
+            elif opcion == '6':
+                
+                print('         6. Eliminar Productos -->')
+                print('****************************************************************')
+                codigo= int(input("Escriba el codigo del producto: "))
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 productos1 = Productos()
                 productos1.eliminar_producto(codigo)
                 os.system("pause")

@@ -2,12 +2,19 @@ use mascotas_db
 DELIMITER //
 
 CREATE PROCEDURE InsertarProducto(
+<<<<<<< HEAD
 	IN p_codigo VARCHAR(40),
     IN p_nombre VARCHAR(100),
     IN p_descripcion TEXT,
     IN p_precio DECIMAL(20,2),
     IN p_stock SMALLINT,
     IN p_estado_acceso ENUM('ACTIVO', 'INACTIVO')
+=======
+    IN p_nombre VARCHAR(100),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(20,2),
+    IN p_stock SMALLINT
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -17,12 +24,21 @@ BEGIN
     END;
 
     -- Insertar el nuevo producto en la tabla 'productos'
+<<<<<<< HEAD
     INSERT INTO productos(codigo,nombre, descripcion, precio, stock,estado_acceso)
     VALUES(p_codigo,p_nombre, p_descripcion, p_precio, p_stock,p_estado_acceso);
 END //
 
 DELIMITER ;
 CALL InsertarProducto(5,'COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50,'ACTIVO');
+=======
+    INSERT INTO productos(nombre, descripcion, precio, stock)
+    VALUES(p_nombre, p_descripcion, p_precio, p_stock);
+END //
+
+DELIMITER ;
+CALL InsertarProducto('COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50);
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
 
 -- Procedimiento para buscar un producto por codigo
@@ -30,6 +46,7 @@ CALL InsertarProducto(5,'COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50,'ACTIVO');
 DELIMITER //
 
 CREATE PROCEDURE BuscarProductoCodigo(
+<<<<<<< HEAD
     IN p_codigo VARCHAR(40)
 )
 BEGIN
@@ -39,6 +56,16 @@ END //
 
 DELIMITER ;
 CALL BuscarProductoCodigo('1');
+=======
+    IN p_codigo INT
+)
+BEGIN
+    SELECT *FROM productos WHERE codigo = p_codigo;
+END //
+
+DELIMITER ;
+CALL BuscarProductoCodigo(1);
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 -- Buscar producto por el nombre
 
 DELIMITER //
@@ -53,8 +80,12 @@ BEGIN
     -- Seleccionar los productos que coinciden con el nombre proporcionado
     SELECT COUNT(*) INTO v_count
     FROM productos
+<<<<<<< HEAD
     WHERE nombre LIKE CONCAT('%', p_nombre, '%')
     AND estado_acceso='ACTIVO';
+=======
+    WHERE nombre LIKE CONCAT('%', p_nombre, '%');
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     -- Comprobar si no se encontraron registros
     IF v_count = 0 THEN
@@ -62,15 +93,25 @@ BEGIN
         SET MESSAGE_TEXT = 'No se encontraron productos con el nombre escrito';
     ELSE
         -- Seleccionar los detalles de los productos encontrados
+<<<<<<< HEAD
         SELECT codigo, nombre, descripcion, precio, stock,estado_acceso
         FROM productos
         WHERE nombre LIKE CONCAT('%', p_nombre, '%')
         AND estado_acceso='ACTIVO';
+=======
+        SELECT codigo, nombre, descripcion, precio, stock
+        FROM productos
+        WHERE nombre LIKE CONCAT('%', p_nombre, '%');
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     END IF;
 END //
 
 DELIMITER ;
+<<<<<<< HEAD
 CALL BuscarProductosPorNombre('c');
+=======
+CALL BuscarProductosPorNombre('Alimento para Perro');
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 -- Buscar varios productos por el nombre
 DELIMITER //
 
@@ -79,13 +120,18 @@ CREATE PROCEDURE BuscarTodosLosProductos(
 BEGIN
     -- Seleccionar todos los productos que coinciden con el nombre proporcionado
     SELECT *
+<<<<<<< HEAD
     FROM productos
     WHERE estado_acceso='ACTIVO';
+=======
+    FROM productos;
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 END //
 
 DELIMITER ;
 CALL BuscarTodosLosProductos();
 -- Eliminar productos por codigo
+<<<<<<< HEAD
 DELIMITER //
 CREATE PROCEDURE ActualizarEstadoProductos(
     IN p_codigo VARCHAR(40),
@@ -106,6 +152,14 @@ CALL ActualizarEstadoProductos('1','INACTIVO');
 DELIMITER //
 CREATE PROCEDURE ActualizarProducto(
 	IN p_codigo VARCHAR(40),
+=======
+
+
+
+DELIMITER //
+CREATE PROCEDURE ActualizarProducto(
+	IN p_codigo INT,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     IN p_nombre VARCHAR(100),
 	IN p_descripcion TEXT,
     IN p_precio DECIMAL(20,2),
@@ -121,11 +175,20 @@ SET codigo = p_codigo,
 WHERE codigo =p_codigo;
 
 END //
+<<<<<<< HEAD
 
 CALL ActualizarProducto('1','COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50);
 
 CREATE PROCEDURE EliminarProductoPorCodigo(
     IN p_codigo VARCHAR(40)
+=======
+DELIMITER;
+CALL ActualizarProducto(1,'COMIDA DE PERRO', 'LABRADOR.PES', 199.99, 50)
+
+DELIMITER //
+CREATE PROCEDURE EliminarProductoPorCodigo(
+    IN p_codigo INT
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 )
 BEGIN
 -- Declarar variable para contar productos

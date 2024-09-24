@@ -6,8 +6,12 @@ from base_datos.conexion10 import BaseDatos
 
 class Usuario:
     def __init__(self,
+<<<<<<< HEAD
                 tipo_documento:str = None,
                 n_documento:str=None, 
+=======
+                id_usuario:int=None, 
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 nombre:str = None,
                 apellido:str = None,
                 ciudad:str = None,
@@ -17,11 +21,17 @@ class Usuario:
                 es_veterinario:bool = None,
                 es_administrador:bool = None,
                 email:str = None, 
+<<<<<<< HEAD
                 contraseña:str = None,
                 estado_acceso:str = None,):
         # Inicializa los atributos del usuario
         self.__tipo_documento = tipo_documento
         self.__n_documento = n_documento
+=======
+                contraseña:str = None):
+        # Inicializa los atributos del usuario
+        self.__id_usuario = id_usuario
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         self.__nombre = nombre
         self.__apellido = apellido
         self.__ciudad = ciudad
@@ -32,6 +42,7 @@ class Usuario:
         self.__es_administrador = es_administrador
         self.__email = email
         self.__contraseña = contraseña
+<<<<<<< HEAD
         self.__estado_acceso = estado_acceso
         
     # Métodos GET y SET para cada atributo
@@ -71,6 +82,30 @@ class Usuario:
                 print('\nEl usuario ha cancelado la entrada de datos.')
                 return None 
             
+=======
+        
+    # Métodos GET y SET para cada atributo
+
+    def get_id_usuario(self):
+        return self.__id_usuario
+
+    def set_id_usuario(self):
+        while True:
+            try:
+                # Solicita el ID del usuario y valida su rango
+                id_usuario = int(input('Ingrese el numero de identificación: '))
+                if 1 <= id_usuario <= 1000000000:
+                    self.__id_usuario = id_usuario
+                    break
+                else:
+                    print('El número debe estar entre 1 y 1000000000')
+            except ValueError:
+                print('El código debe ser un número.')
+            except KeyboardInterrupt:
+                print('El usuario ha cancelado la entrada de datos.')
+            continue
+        
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     def get_nombre(self):
         return self.__nombre
 
@@ -145,6 +180,7 @@ class Usuario:
     def set_telefono(self):
         while True:
             try:
+<<<<<<< HEAD
                 telefono = input('Ingrese el telefono: ').strip()
                 if telefono.isdigit() and 7<= len(telefono) <= 20:
                     self.__telefono = telefono
@@ -154,6 +190,18 @@ class Usuario:
             except KeyboardInterrupt:
                 print('\nEl usuario ha cancelado la entrada de datos.')
                 return None 
+=======
+                # Solicita el teléfono del usuario y valida su longitud
+                telefono = input('Ingrese el teléfono: ')
+                if 7 <= len(telefono) <= 20:
+                    self.__telefono = telefono
+                    break
+                else:
+                    print('Teléfono incorrecto. Intente de nuevo')
+            except KeyboardInterrupt:
+                print('El usuario ha cancelado la entrada de datos.')
+                continue
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def get_es_propietario(self):
         return self.__es_propietario
@@ -251,6 +299,7 @@ class Usuario:
         # Verifica la contraseña ingresada contra la contraseña cifrada almacenada
         return bcrypt.checkpw(contraseña_ingresada.encode('utf-8'), self.__contraseña)
     
+<<<<<<< HEAD
     def get_estado_acceso(self):
         return self.__estado_acceso
     
@@ -276,6 +325,11 @@ class Usuario:
         # Captura y establece todos los datos del usuario
         self.set_tipo_documento()
         self.set_n_documento()
+=======
+    def capturar_datos(self):
+        # Captura y establece todos los datos del usuario
+        self.set_id_usuario()
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         self.set_nombre()
         self.set_apellido()
         self.set_ciudad()
@@ -286,4 +340,7 @@ class Usuario:
         self.set_es_administrador()
         self.set_email()
         self.set_contraseña()
+<<<<<<< HEAD
         self.set_estado_acceso()        
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6

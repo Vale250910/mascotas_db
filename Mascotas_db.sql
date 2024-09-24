@@ -2,13 +2,18 @@ CREATE DATABASE IF NOT EXISTS mascotas_db;
 USE mascotas_db;
 
 CREATE TABLE usuarios (
+<<<<<<< HEAD
 tipo_documento ENUM ('C.C','C.E','T.I')DEFAULT 'C.C',
 n_documento VARCHAR(40)PRIMARY KEY NOT NULL,
+=======
+id_usuario INT UNSIGNED PRIMARY KEY NOT NULL,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 nombre VARCHAR(50) NOT NULL,
 apellido VARCHAR(30) NOT NULL,
 ciudad VARCHAR(50) NOT NULL,
 direccion VARCHAR(100) NOT NULL,
 telefono VARCHAR(20) NOT NULL,
+<<<<<<< HEAD
 es_propietario BOOLEAN DEFAULT 1 NOT NULL,
 es_veterinario BOOLEAN DEFAULT 1 NOT NULL,
 es_administrador BOOLEAN DEFAULT 1 NOT NULL,
@@ -22,51 +27,99 @@ n_documento VARCHAR(40)PRIMARY KEY NOT NULL,
 cargo VARCHAR(100) NOT NULL,
 fecha_ingreso DATE NOT NULL,
 FOREIGN KEY (n_documento) REFERENCES usuarios(n_documento)
+=======
+es_propietario SMALLINT DEFAULT FALSE,
+es_veterinario SMALLINT DEFAULT FALSE,
+es_administrador SMALLINT DEFAULT FALSE,
+email VARCHAR(100) NOT NULL UNIQUE,
+contraseña VARCHAR(255) NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
+);
+
+CREATE TABLE administradores (
+id_usuario INT UNSIGNED PRIMARY KEY NOT NULL,
+cargo VARCHAR(100) NOT NULL,
+fecha_ingreso DATE NOT NULL,
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 );
 
 CREATE TABLE propietarios (
+<<<<<<< HEAD
 n_documento VARCHAR(40)PRIMARY KEY NOT NULL,
 barrio VARCHAR(100) NOT NULL,
 FOREIGN KEY (n_documento) REFERENCES usuarios(n_documento)
+=======
+id_usuario INT UNSIGNED PRIMARY KEY NOT NULL,
+barrio VARCHAR(100) NOT NULL,
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 );
 
 CREATE TABLE veterinarios (
+<<<<<<< HEAD
 n_documento VARCHAR(40)PRIMARY KEY NOT NULL,
 especialidad VARCHAR(100)NOT NULL,
 horario VARCHAR(255)NOT NULL,
 FOREIGN KEY (n_documento) REFERENCES usuarios(n_documento)
+=======
+id_usuario INT UNSIGNED PRIMARY KEY NOT NULL,
+especialidad VARCHAR(100)NOT NULL,
+horario VARCHAR(255)NOT NULL,
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 );
 
 CREATE TABLE mascotas (
+<<<<<<< HEAD
 codigo VARCHAR(40)PRIMARY KEY NOT NULL,
+=======
+codigo INT UNSIGNED PRIMARY KEY NOT NULL,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 nombre VARCHAR (100) NOT NULL,
 especie VARCHAR (100) NOT NULL,
 raza VARCHAR (100) NOT NULL,
 edad DECIMAL (10,2) NOT NULL,
 peso DECIMAL (10,2) NOT NULL,
+<<<<<<< HEAD
 n_documento VARCHAR(40) NOT NULL,
 estado_acceso ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO',
 FOREIGN KEY (n_documento) references propietarios(n_documento)
+=======
+id_usuario INT UNSIGNED NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
+FOREIGN KEY (id_usuario) references propietarios(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 );
 CREATE TABLE historiales_medicos(
+<<<<<<< HEAD
 codigo VARCHAR(40)NOT NULL ,
 fecha DATE NOT NULL,
 descripcion TEXT,
 tratamiento TEXT,
 codigo_mascota VARCHAR(40) NOT NULL,
 estado_acceso ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO',
+=======
+codigo INT UNSIGNED  NOT NULL ,
+fecha DATE NOT NULL,
+descripcion TEXT,
+tratamiento TEXT,
+codigo_mascota INT UNSIGNED NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 PRIMARY KEY(codigo,codigo_mascota),
 FOREIGN KEY (codigo_mascota) REFERENCES mascotas(codigo)
 );
 CREATE TABLE servicios(
+<<<<<<< HEAD
 codigo VARCHAR(40) NOT NULL PRIMARY KEY ,
 nombre VARCHAR(100)NOT NULL,
 descripcion TEXT,
@@ -88,10 +141,34 @@ FOREIGN KEY (codigo_mascota) REFERENCES mascotas(codigo)
 );
 CREATE TABLE productos(
     codigo VARCHAR(40) NOT NULL PRIMARY KEY,
+=======
+codigo INT UNSIGNED NOT NULL PRIMARY KEY ,
+nombre VARCHAR(100)NOT NULL,
+descripcion TEXT,
+precio DECIMAL (20,2)NOT NULL,
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
+);
+CREATE TABLE citas(
+codigo INT UNSIGNED NOT NULL PRIMARY KEY ,
+fecha DATE NOT NULL,
+hora TIME,
+id_servicio INT UNSIGNED NOT NULL,
+id_veterinario INT UNSIGNED NOT NULL,
+codigo_mascota INT UNSIGNED NOT NULL,
+estado ENUM('PENDIENTE', 'CONFIRMADA', 'CANCELADA', 'REALIZADA', 'NO_ASISTIDA') NOT NULL DEFAULT 'PENDIENTE',
+estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO',
+FOREIGN KEY (id_servicio) REFERENCES servicios(codigo),
+FOREIGN KEY (id_veterinario) REFERENCES veterinarios(id_usuario),
+FOREIGN KEY (codigo_mascota) REFERENCES mascotas(codigo)
+);
+CREATE TABLE productos(
+    codigo INT UNSIGNED NOT NULL PRIMARY KEY,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     nombre VARCHAR(100),
     descripcion TEXT(100),
     precio DECIMAL(10,2), -- Especificar precisión y escala
     stock SMALLINT UNSIGNED NOT NULL,
+<<<<<<< HEAD
     estado_acceso ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO'
 );
 
@@ -192,10 +269,92 @@ SELECT * FROM productos;
 SELECT 
     u.n_documento, u.nombre AS nombre_usuario, u.apellido, u.ciudad, u.direccion, u.telefono, u.email,
     p.n_documento AS id_propietario,
+=======
+    estado_acceso enum ('ACTIVO','INACTIVO') DEFAULT 'ACTIVO'
+);
+
+INSERT INTO usuarios (id_usuario, nombre, apellido, ciudad, direccion, telefono, es_propietario, es_veterinario, es_administrador, email, contraseña) VALUES
+(101, 'ALBERTO', 'DI CAPRIO', 'PALMIRA', 'CALLE 45', '31295858', 1, 0, 0, 'alberto@gmail.com', '4321'),
+(102, 'JAQUELINE', 'ACOSTA', 'FACATATIVA', 'CALLE 51', '313409449', 0, 0, 0, 'jaqueline@gmail.com', '987'),
+(103, 'MARIANA', 'URQUIJO', 'SOACHA', 'CALLE 84', '31404534', 0, 0, 0, 'mariana@gmail.com', '98712'),
+(104, 'RICARDO JORGE', 'ESPITIA', 'COTA', 'CALLE 31', '31343333', 1, 0, 0, 'jorge@gmail.com', '12345678'),
+(105, 'PEPE', 'CORTISONIA', 'SIBATE', 'CALLE 88', '3114393', 0, 0, 0, 'pepe@gmail.com', '4321'),
+(106, 'LILIANA', 'MANRIQUE', 'SOACHA', 'CALLE 99 14-44', '3103559658', 1, 0, 0, 'liliana@gmail.com', '54321'),
+(107, 'HAROLD', 'LOZANO', 'SIBATE', 'CALLE 12-3', '313598', 0, 0, 0, 'harold@gmail.com', '54321'),
+(108, 'FRANCISCO', 'PARRA', 'MOSQUERA', 'CALLE 13 12-44', '311857372', 0, 0, 0, 'francisco@gmail.com', '123'),
+(109, 'SOFIA', 'MENDIETE', 'BOGOTA', 'CALLE 80 4-8', '312987', 1, 0, 0, 'sofia@gmail.com', '123'),
+(110, 'MARIO', 'CHIPOLLINI', 'NAPOLES - ITALIA', 'CALLE 12 13-43', '311857372', 1, 0, 0, 'mario@gmail.com', '123');
+
+INSERT INTO propietarios (id_usuario,barrio) VALUES
+(101,'SOACHA'),
+(104,'BOSA'),
+(106,'GUATAPE'),
+(109,'SOACHA COMPARTIR'),
+(110,'SAN MATEO');
+SELECT * FROM propietarios;
+
+INSERT INTO mascotas (codigo, nombre, especie, raza, edad, peso, id_usuario)
+VALUES
+(1, 'Firulais', 'Perro', 'Pastor Alemán', 5, 30.5, 101),
+(2, 'Mishi', 'Gato', 'Siames', 3, 5.2, 104),
+(3, 'Bunny', 'Conejo', 'Mini Lop', 2, 1.8, 106);
+SELECT * FROM mascotas;
+
+INSERT INTO administradores (id_usuario, cargo, fecha_ingreso) VALUES
+(102, 'Administrador General', '2023-01-15'),
+(103, 'Administrador de Recursos Humanos', '2023-02-20'),
+(104, 'Administrador de TI', '2023-03-05'),
+(108, 'Administrador Financiero', '2023-04-10'),
+(110, 'Administrador de Operaciones', '2023-05-25');
+SELECT * FROM administradores;
+
+INSERT INTO veterinarios (id_usuario, especialidad, horario) VALUES
+(105, 'Cirugía', 'Lunes a Viernes, 8:00 - 17:00'),
+(106, 'Dermatología', 'Martes a Sábado, 9:00 - 18:00'),
+(107, 'Oftalmología', 'Lunes a Viernes, 8:00 - 17:00'),
+(108, 'Cardiología', 'Miércoles a Domingo, 10:00 - 19:00'),
+(109, 'Neurología', 'Jueves a Lunes, 9:00 - 18:00');
+
+SELECT * FROM veterinarios;
+
+INSERT INTO servicios (codigo, nombre, descripcion, precio)
+VALUES
+(1, 'Vacunación', 'Aplicación de vacunas básicas', 50.00),
+(2, 'Consulta General', 'Revisión médica completa', 30.00),
+(3, 'Cirugía Menor', 'Procedimientos quirúrgicos de bajo riesgo', 200.00);
+SELECT * FROM servicios;
+
+INSERT INTO citas (codigo, fecha, hora, id_servicio, id_veterinario, codigo_mascota)
+VALUES
+(1, '2023-09-10', '10:00:00', 1,105 ,1 ),
+(2, '2023-09-15', '14:00:00', 2,105, 2),
+(3, '2023-09-20', '09:30:00', 3, 107,3 );
+SELECT*FROM citas;
+
+INSERT INTO historiales_medicos (codigo, fecha, descripcion, tratamiento, codigo_mascota)
+VALUES
+(1, '2023-09-01', 'Vacuna antirrábica aplicada', 'Descanso y monitoreo de 24 horas', 1),
+(2, '2023-08-15', 'Desparasitación', 'Administrar medicamento por 5 días', 2),
+(3, '2023-07-22', 'Revisión general', 'Dieta controlada', 3);
+SELECT*FROM historiales_medicos;
+
+INSERT INTO productos (codigo, nombre, descripcion, precio, stock)
+VALUES
+(1, 'Alimento para perros', 'Alimento premium para perros adultos', 25.99, 50),
+(2, 'Juguete para gatos', 'Juguete interactivo con plumas', 9.99, 100),
+(3, 'Collar antipulgas', 'Collar para eliminar y prevenir pulgas', 15.50, 30);
+SELECT * FROM productos;
+-- inner join
+
+SELECT 
+    u.id_usuario, u.nombre AS nombre_usuario, u.apellido, u.ciudad, u.direccion, u.telefono, u.email,
+    p.id_usuario AS id_propietario,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     m.codigo AS codigo_mascota, m.nombre AS nombre_mascota, m.especie, m.raza, m.edad, m.peso
 FROM 
     usuarios u
 INNER JOIN 
+<<<<<<< HEAD
     propietarios p ON u.n_documento = p.n_documento
 INNER JOIN 
     mascotas m ON p.n_documento = m.n_documento;
@@ -226,13 +385,49 @@ INNER JOIN
 
 SELECT 
     u.n_documento, 
+=======
+    propietarios p ON u.id_usuario = p.id_usuario
+INNER JOIN 
+    mascotas m ON p.id_usuario = m.id_usuario;
+    
+SELECT 
+    u.id_usuario, u.nombre AS nombre_usuario, u.apellido, u.ciudad, u.direccion, u.telefono, u.email,
+    p.id_usuario AS id_propietario
+FROM 
+    usuarios u
+INNER JOIN 
+    propietarios p ON u.id_usuario = p.id_usuario;
+    
+SELECT 
+    u.id_usuario, u.nombre AS nombre_usuario, u.apellido, u.ciudad, u.direccion, u.telefono, u.email,
+    a.id_usuario,a.cargo,a.fecha_ingreso AS id_administrador,cargo,fecha_ingreso
+FROM 
+    usuarios u
+INNER JOIN 
+    administradores a ON u.id_usuario = a.id_usuario;
+    
+SELECT 
+    u.id_usuario, u.nombre AS nombre_usuario, u.apellido, u.ciudad, u.direccion, u.telefono, u.email,
+    v.id_usuario,v.especialidad,v.horario AS id_veterinario,especialidad,horario
+FROM 
+    usuarios u
+INNER JOIN 
+    veterinarios v ON u.id_usuario = v.id_usuario;
+
+SELECT 
+    u.id_usuario, 
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     UPPER(u.nombre) AS nombre_usuario, 
     UPPER(u.apellido) AS apellido, 
     UPPER(u.ciudad) AS ciudad, 
     UPPER(u.direccion) AS direccion, 
     u.telefono, 
     LOWER(u.email) AS email,
+<<<<<<< HEAD
     p.n_documento AS id_propietario,
+=======
+    p.id_usuario AS id_propietario,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     m.codigo AS codigo_mascota, 
     UPPER(m.nombre) AS nombre_mascota, 
     UPPER(m.especie) AS especie, 
@@ -242,10 +437,16 @@ SELECT
 FROM 
     usuarios u
 INNER JOIN 
+<<<<<<< HEAD
     propietarios p ON u.n_documento = p.n_documento
 INNER JOIN 
     mascotas m ON p.n_documento = m.n_documento
     ;
+=======
+    propietarios p ON u.id_usuario = p.id_usuario
+INNER JOIN 
+    mascotas m ON p.id_usuario = m.id_usuario;
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
 
 

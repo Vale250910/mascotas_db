@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from base_datos.conexion10 import BaseDatos
+<<<<<<< HEAD
 
 
 class Productos:
@@ -12,6 +13,18 @@ class Productos:
                 precio: float = None,
                 stock: int = None,
                 estado_acceso:str = None,):
+=======
+from colorama import init, Fore, Back, Style
+init()
+
+class Productos:
+    def __init__(self,
+                codigo: int = None,
+                nombre: str = None,
+                descripcion: str = None,
+                precio: float = None,
+                stock: int = None):
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         """
         Inicializa un objeto Producto con los atributos proporcionados.
         :param codigo: Código del producto.
@@ -25,7 +38,10 @@ class Productos:
         self.__descripcion = descripcion
         self.__precio = precio
         self.__stock = stock
+<<<<<<< HEAD
         self.__estado_acceso = estado_acceso
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     # Métodos GET
     def get_codigo(self):
@@ -57,6 +73,7 @@ class Productos:
         Retorna el stock del producto.
         """
         return self.__stock
+<<<<<<< HEAD
     
     def get_estado_acceso(self):
         """
@@ -81,6 +98,10 @@ class Productos:
                 print('El usuario ha cancelado la entrada de datos.')
                 continue
 
+=======
+
+    # Métodos SET
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     def set_nombre(self):
         """
         Solicita al usuario que ingrese el nombre del producto y valida la entrada.
@@ -88,7 +109,11 @@ class Productos:
         while True:
             try:
                 nombre = input('Escriba el nombre del producto: ')
+<<<<<<< HEAD
                 if len(nombre) >1:
+=======
+                if len(nombre) > 3:
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                     self.__nombre = nombre
                     break
                 else:
@@ -150,6 +175,7 @@ class Productos:
                 print('El usuario ha cancelado la entrada de datos.')
                 continue
 
+<<<<<<< HEAD
     def set_estado_acceso(self):
         while True:
             try:
@@ -164,16 +190,24 @@ class Productos:
                 print('\nEl usuario ha cancelado la entrada de datos.')
                 break
 
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
     def capturar_datos(self):
         """
         Captura todos los datos necesarios para registrar un producto a través de las funciones de entrada.
         """
+<<<<<<< HEAD
         self.set_codigo()
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         self.set_nombre()
         self.set_descripcion()
         self.set_precio()
         self.set_stock()
+<<<<<<< HEAD
         self.set_estado_acceso()
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def registrar_producto(self):
         """
@@ -185,23 +219,35 @@ class Productos:
             try:
                 cursorproducto = conexion.cursor()
                 cursorproducto.callproc('InsertarProducto', [
+<<<<<<< HEAD
                     self.get_codigo(), 
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                     self.get_nombre(), 
                     self.get_descripcion(),
                     self.get_precio(),
                     self.get_stock(),
+<<<<<<< HEAD
                     self.get_estado_acceso(),
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 ])
                 conexion.commit()
                 print('Producto registrado correctamente...')
                 print('\n Datos del producto registrados:')
                 print('------------------------------------------')
+<<<<<<< HEAD
                 print(f'  Código: {self.get_codigo()}')
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print(f'  Nombre: {self.get_nombre()}')
                 print(f'  Descripción: {self.get_descripcion()}')
                 print(f'  Precio: {self.get_precio()}')
                 print(f'  Stock: {self.get_stock()}')
+<<<<<<< HEAD
                 print(f'  Estado de acceso: {self.get_estado_acceso()}')
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al registrar producto: {e}')
                 conexion.rollback()
@@ -231,12 +277,19 @@ class Productos:
                                 f"| {'Codigo':<15}: {datos[0]:<20} | {'Nombre':<15}: {datos[1]:<30}\n" +
                                 f"| {'Descripción':<15}: {datos[2]:<50}\n" +
                                 f"| {'Precio':<15}: {datos[3]:<20} | {'Stock':<15}: {datos[4]:<20}\n" +
+<<<<<<< HEAD
                                 f"| {'Estado de acceso':<15}: {datos[5]:<20}\n" +
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                 '\033[0;m')
                             print('****************************************************************************************************')
 
                 if not producto_encontrado:
+<<<<<<< HEAD
                     print("No se encontraron productos no existe o esta inactivo.")
+=======
+                    print("No se encontraron productos.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar productos: {e}')
             finally:
@@ -271,13 +324,20 @@ class Productos:
                             f"| {'Codigo':<15}: {fila[0]:<20} | {'Nombre':<15}: {fila[1]:<30}\n" +
                             f"| {'Descripción':<15}: {fila[2]:<50}\n" +
                             f"| {'Precio':<15}: {fila[3]:<20} | {'Stock':<15}: {fila[4]:<20}\n" +
+<<<<<<< HEAD
                             f"| {'Estado de acceso':<15}: {fila[5]:<20}\n" +
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                             '\033[0;m')
                         print('****************************************************************************************************')
                         break
 
                 if not producto_encontrado:
+<<<<<<< HEAD
                     print('El código de producto proporcionado no existe o esta inactivo.')
+=======
+                    print('El código de producto proporcionado no existe.')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 
                 return producto_encontrado  # Retorna True si se encontró un producto, False si no
             
@@ -289,7 +349,11 @@ class Productos:
     
         return False 
 
+<<<<<<< HEAD
     def buscar_producto_nombre(self, nombre):
+=======
+    def buscar_producto_nombre(self, nombre_producto):
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         """
         Busca un producto en la base de datos por su nombre.
         :param nombre_producto: Nombre del producto a buscar.
@@ -298,7 +362,11 @@ class Productos:
         if conexion:
             try:
                 cursorproducto = conexion.cursor()
+<<<<<<< HEAD
                 cursorproducto.callproc('BuscarProductosPorNombre', [nombre])
+=======
+                cursorproducto.callproc('BuscarProductosPorNombre', [nombre_producto])
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('Búsqueda del producto completada.')
 
                 producto_encontrado = False
@@ -313,16 +381,24 @@ class Productos:
                                 f"| {'Codigo':<15}: {datos[0]:<20} | {'Nombre':<15}: {datos[1]:<30}\n" +
                                 f"| {'Descripción':<15}: {datos[2]:<50}\n" +
                                 f"| {'Precio':<15}: {datos[3]:<20} | {'Stock':<15}: {datos[4]:<20}\n" +
+<<<<<<< HEAD
                                 f"| {'Estado de acceso':<15}: {datos[5]:<20}\n" +
                                 '\033[0;m')
                             print('****************************************************************************************************')
                 if not producto_encontrado:
                     print("No se encontró el producto proporcionado no existe o esta inactivo.")
+=======
+                                '\033[0;m')
+                            print('****************************************************************************************************')
+                if not producto_encontrado:
+                    print("No se encontró el producto proporcionado.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar producto: {e}')
             finally:
                 BaseDatos.desconectar()
         return None
+<<<<<<< HEAD
     
     def actualizar_estado_producto(self, codigo=None, nuevo_estado_acceso=None):
         if codigo is None:
@@ -354,6 +430,8 @@ class Productos:
                 BaseDatos.desconectar()  
         else:
             print('No se pudo establecer la conexión con la base de datos.')
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def actualizar_producto(self, codigo):
         """
@@ -401,8 +479,12 @@ class Productos:
                 finally:
                     BaseDatos.desconectar()
         else:
+<<<<<<< HEAD
            print('Producto no encontrado. Asegúrese de que el código ingresado sea correcto o que el producto esté activo. Intente nuevamente.')
 
+=======
+            print('Producto no encontrado. Intente otra vez')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def eliminar_producto(self, codigo_producto):
         """

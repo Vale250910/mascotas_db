@@ -8,24 +8,35 @@ import re
 class Servicios:
     def __init__(
             self,
+<<<<<<< HEAD
             codigo: str = None,
             nombre: str = None,
             descripcion: str = None,
             precio: float = None,
             estado_acceso: str = None,
+=======
+            codigo: int = None,
+            nombre: str = None,
+            descripcion: str = None,
+            precio: float = None,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             ):
         # Inicializa los atributos del servicio
         self.__codigo = codigo
         self.__nombre = nombre
         self.__descripcion = descripcion
         self.__precio = precio
+<<<<<<< HEAD
         self.__estado_acceso = estado_acceso
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     # GET y SET
 
     def get_codigo(self):
         # Devuelve el código del servicio
         return self.__codigo
+<<<<<<< HEAD
     
     def set_codigo(self):
         # Establece el código del servicio después de validarlo
@@ -40,6 +51,8 @@ class Servicios:
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
                 continue
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def get_nombre(self):
         # Devuelve el nombre del servicio
@@ -97,6 +110,7 @@ class Servicios:
             except KeyboardInterrupt:
                 print('El usuario ha cancelado la entrada de datos.')
                 break    
+<<<<<<< HEAD
         # Método para establecer el estado de acceso del servicio
     def get_estado_acceso(self):
         # Devuelve el estado de acceso del servicio
@@ -123,6 +137,14 @@ class Servicios:
         self.set_descripcion()
         self.set_precio()
         self.set_estado_acceso()
+=======
+
+    def capturar_datos(self):
+        # Captura y establece todos los datos del servicio
+        self.set_nombre()
+        self.set_descripcion()
+        self.set_precio()
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def registrar_servicio(self):
         # Registra un nuevo servicio en la base de datos
@@ -133,21 +155,33 @@ class Servicios:
                 cursor_servicio = conexion.cursor()
                 # Llama al procedimiento almacenado para insertar un servicio
                 cursor_servicio.callproc('InsertarServicio', [
+<<<<<<< HEAD
                     self.get_codigo(),
                     self.get_nombre(),
                     self.get_descripcion(),
                     self.get_precio(),
                     self.get_estado_acceso(),
+=======
+                    self.get_nombre(),
+                    self.get_descripcion(),
+                    self.get_precio(),
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 ])
                 conexion.commit()
                 print('Servicio registrado correctamente...')
                 print('\n Datos del servicio actualizados:')
                 print('------------------------------------------')
+<<<<<<< HEAD
                 print(f'  Código: {self.get_codigo()}')
                 print(f'  Nombre: {self.get_nombre()}')
                 print(f'  Descripción: {self.get_descripcion()}')
                 print(f'  Precio: {self.get_precio()}')
                 print(f'  Estado de acceso: {self.get_estado_acceso()}')
+=======
+                print(f'  Nombre: {self.get_nombre()}')
+                print(f'  Descripción: {self.get_descripcion()}')
+                print(f'  Precio: {self.get_precio()}')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al registrar servicio: {e}')
                 conexion.rollback()
@@ -175,12 +209,20 @@ class Servicios:
                             print("\033[;36m" +
                                 f"| {'Código':<15}: {datos[0]:<20} | {'Nombre':<15}: {datos[1]:<30}\n" +
                                 f"| {'Descripción':<15}: {datos[2]:<50}\n" +
+<<<<<<< HEAD
                                 f"| {'Precio':<15}: {datos[3]:<20} | {'Estado Acceso':<15}:{datos[4]:<30}\n" +
+=======
+                                f"| {'Precio':<15}: {datos[3]:<20}\n" +
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                 '\033[0;m')
                             print('****************************************************************************************************')
 
                 if not servicio_encontrado:
+<<<<<<< HEAD
                     print("No se encontró el servicio proporcionado no existe o esta inactivo.")
+=======
+                    print("No se encontró el servicio proporcionado.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar servicio: {e}')
             finally:
@@ -211,12 +253,20 @@ class Servicios:
                         print("\033[;36m" +
                                 f"| {'Código':<15}: {fila[0]:<20} | {'Nombre':<15}: {fila[1]:<30}\n" +
                                 f"| {'Descripción':<15}: {fila[2]:<50}\n" +
+<<<<<<< HEAD
                                 f"| {'Precio':<15}: {fila[3]:<20} | {'Estado Acceso':<15}:{fila[4]:<30}\n" +
+=======
+                                f"| {'Precio':<15}: {fila[3]:<20}\n" +
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                 '\033[0;m')
                         print('****************************************************************************************************')
                         break
                 if not servicio_encontrado:
+<<<<<<< HEAD
                     print("No se encontró el servicio con el código proporcionado no existe o esta inactivo.")
+=======
+                    print("No se encontró el servicio con el código proporcionado.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 return servicio_encontrado        
             except Exception as e:
                 print(f'Error al buscar el servicio: {e}')
@@ -245,16 +295,25 @@ class Servicios:
                             print("\033[;36m" +
                                 f"| {'Código':<15}: {datos[0]:<20} | {'Nombre':<15}: {datos[1]:<30}\n" +
                                 f"| {'Descripción':<15}: {datos[2]:<50}\n" +
+<<<<<<< HEAD
                                 f"| {'Precio':<15}: {datos[3]:<20} | {'Estado Acceso':<15}:{datos[4]:<30}\n" +
                                 '\033[0;m')
                             print('****************************************************************************************************')
                 if not servicio_encontrado:
                     print("No se encontró el servicio proporcionado no existe o esta inactivo.")
+=======
+                                f"| {'Precio':<15}: {datos[3]:<20}\n" +
+                                '\033[0;m')
+                            print('****************************************************************************************************')
+                if not servicio_encontrado:
+                    print("No se encontró el servicio proporcionado.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar servicio: {e}')
             finally:
                 BaseDatos.desconectar()
         return None
+<<<<<<< HEAD
     
     def actualizar_estado_servicio(self, codigo=None, nuevo_estado_acceso=None):
         if codigo is None:
@@ -286,6 +345,8 @@ class Servicios:
                 BaseDatos.desconectar()  
         else:
             print('No se pudo establecer la conexión con la base de datos.')
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def actualizar_servicio(self, codigo):
         # Actualiza un servicio existente por su código
@@ -327,7 +388,11 @@ class Servicios:
                 finally:
                     BaseDatos.desconectar()
         else:
+<<<<<<< HEAD
             print('Servicio no encontrado. Asegúrese de que el código ingresado sea correcto o que el servicio esté activo. Intente nuevamente.')
+=======
+            print('Servicio no encontrado. Intente otra vez')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
 
     def eliminar_servicio(self, codigo_servicio):
         # Elimina un servicio por su código

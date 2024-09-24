@@ -43,8 +43,12 @@ class Propietario(Usuario):
                 cursor_mascota = conexion.cursor()
                 # Llama al procedimiento almacenado InsertarPropietario
                 cursor_mascota.callproc('InsertarPropietario', [
+<<<<<<< HEAD
                     self.get_tipo_documento(),  # Usar métodos getter para atributos privados
                     self.get_n_documento(),  # Usar métodos getter para atributos privados
+=======
+                    self.get_id_usuario(),  # Usar métodos getter para atributos privados
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                     self.get_nombre(),
                     self.get_apellido(),
                     self.get_ciudad(),
@@ -55,9 +59,13 @@ class Propietario(Usuario):
                     self.get_es_administrador(),
                     self.get_email(),
                     self.get_contraseña(),
+<<<<<<< HEAD
                     self.get_estado_acceso(),
                     self.get_barrio(),
                     
+=======
+                    self.get_barrio()
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 ])
                 
                 # Confirmar cambios en la base de datos
@@ -67,8 +75,12 @@ class Propietario(Usuario):
                 # Imprimir los datos registrados
                 print('\nDatos del propietario registrados:')
                 print('------------------------------------------')
+<<<<<<< HEAD
                 print(f'Tipo Documento: {self.get_tipo_documento()}')
                 print(f'N. Documento: {self.get_n_documento()}')
+=======
+                print(f'Id propietario: {self.get_id_usuario()}')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print(f'Nombre: {self.get_nombre()}')
                 print(f'Apellido: {self.get_apellido()}')
                 print(f'Ciudad: {self.get_ciudad()}')
@@ -79,10 +91,15 @@ class Propietario(Usuario):
                 print(f'Es administrador: {self.get_es_administrador()}')
                 print(f'Email: {self.get_email()}')
                 print(f'Contraseña: {self.get_contraseña()}')
+<<<<<<< HEAD
                 print(f'Estado: {self.get_estado_acceso()}')
                 print(f'Barrio: {self.get_barrio()}')
                 
                 
+=======
+                print(f'Barrio: {self.get_barrio()}')
+                
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 # En caso de error, se realiza un rollback para revertir la transacción
                 print(f'Error al registrar el propietario: {e}')
@@ -111,6 +128,7 @@ class Propietario(Usuario):
                             print('Resultado:')
                             print('**********************************************************************************************')
                             print("\033[;36m" +
+<<<<<<< HEAD
                                 f"| Tipo Documento  : {datos[0]:<20} \n"+
                                 f"| N. Documento    : {datos[1]:<20}  | Nombre           : {datos[2]}  \n" +
                                 f"| Apellido        : {datos[3]:<20}  | Ciudad           : {datos[4]}  \n" +
@@ -118,12 +136,24 @@ class Propietario(Usuario):
                                 f"| Es propietario  : {datos[7]:<20}  | Es veterinario   : {datos[8]}  \n" +
                                 f"| Es administrador: {datos[9]:<20}  | Email            : {datos[10]} \n" +
                                 f"| Estado Acceso   : {datos[12]:<20}  | Barrio           : {datos[13]} \n" +
+=======
+                                f"| Id propietario  : {datos[0]:<20}  | Nombre           : {datos[1]}  \n" +
+                                f"| Apellido        : {datos[2]:<20}  | Ciudad           : {datos[3]}  \n" +
+                                f"| Dirección       : {datos[4]:<20}  | Teléfono         : {datos[5]}  \n" +
+                                f"| Es propietario  : {datos[6]:<20}  | Es veterinario   : {datos[7]}  \n" +
+                                f"| Es administrador: {datos[8]:<20}  | Email            : {datos[9]}  \n" +
+                                f"| Barrio          : {datos[11]} "
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                 '\033[0;m')
                             print('**********************************************************************************************')
                     else:
                         print('No se encontraron resultados.')
                 if not propietario_encontrado:
+<<<<<<< HEAD
                     print("No se encontró el propietario proporcionado no existe o esta inactivo.")
+=======
+                    print("No se encontró el propietario proporcionado.")
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar el propietario: {e}')
             finally:
@@ -131,16 +161,27 @@ class Propietario(Usuario):
         return None
 
     # Método para buscar un propietario por su ID
+<<<<<<< HEAD
     def buscar_propietario_id(self, n_documento=None):
         if n_documento is None:
             self.set_n_documento()  # Si no se proporciona ID, se solicita
             n_documento = self.get_n_documento()
+=======
+    def buscar_propietario_id(self, id_usuario=None):
+        if id_usuario is None:
+            self.set_id_usuario()  # Si no se proporciona ID, se solicita
+            id_usuario = self.get_id_usuario()
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         conexion = BaseDatos.conectar()  # Conecta a la base de datos
         if conexion:
             try:
                 cursor_propietario = conexion.cursor()
                 # Llama al procedimiento almacenado ObtenerPropietarioPorID
+<<<<<<< HEAD
                 cursor_propietario.callproc('ObtenerPropietarioPorID', [n_documento])
+=======
+                cursor_propietario.callproc('ObtenerPropietarioPorID', [id_usuario])
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('Búsqueda de propietario completada.')
                 propietario_encontrado = False
                 # Itera sobre los resultados devueltos por el procedimiento almacenado
@@ -153,6 +194,7 @@ class Propietario(Usuario):
                             print('Resultado:')
                             print('**********************************************************************************************')
                             print("\033[;36m" +
+<<<<<<< HEAD
                                     f"| Tipo Documento  : {fila[0]:<20} \n"+
                                     f"| N. Documento    : {fila[1]:<20}  | Nombre           : {fila[2]}  \n" +
                                     f"| Apellido        : {fila[3]:<20}  | Ciudad           : {fila[4]}  \n" +
@@ -160,11 +202,23 @@ class Propietario(Usuario):
                                     f"| Es propietario  : {fila[7]:<20}  | Es veterinario   : {fila[8]}  \n" +
                                     f"| Es administrador: {fila[9]:<20}  | Email            : {fila[10]} \n" +
                                     f"| Estado Acceso   : {fila[12]:<20}  | Barrio           : {fila[13]} \n" +
+=======
+                                    f"| Id propietario  : {fila[0]:<20}  | Nombre           : {fila[1]}  \n" +
+                                    f"| Apellido        : {fila[2]:<20}  | Ciudad           : {fila[3]}  \n" +
+                                    f"| Dirección       : {fila[4]:<20}  | Teléfono         : {fila[5]}  \n" +
+                                    f"| Es propietario  : {fila[6]:<20}  | Es veterinario   : {fila[7]}  \n" +
+                                    f"| Es administrador: {fila[8]:<20}  | Email            : {fila[9]}  \n" + 
+                                    f"| Barrio          : {fila[11]} "
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                     '\033[0;m')
                             print('**********************************************************************************************')
                             return fila
                 if not propietario_encontrado:
+<<<<<<< HEAD
                     print("No se encontraron propietarios con el código proporcionado no existe o esta inactivo.")      
+=======
+                    print("No se encontraron propietarios con el código proporcionado.")      
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar propietario: {e}')
             finally:
@@ -194,6 +248,7 @@ class Propietario(Usuario):
                             print('Resultado:')
                             print('**********************************************************************************************')
                             print("\033[;36m" +
+<<<<<<< HEAD
                                 f"| Tipo Documento  : {datos[0]:<20} \n"+
                                 f"| N. Documento    : {datos[1]:<20}  | Nombre           : {datos[2]}  \n" +
                                 f"| Apellido        : {datos[3]:<20}  | Ciudad           : {datos[4]}  \n" +
@@ -201,17 +256,30 @@ class Propietario(Usuario):
                                 f"| Es propietario  : {datos[7]:<20}  | Es veterinario   : {datos[8]}  \n" +
                                 f"| Es administrador: {datos[9]:<20}  | Email            : {datos[10]} \n" +
                                 f"| Estado Acceso   : {datos[12]:<20}  | Barrio           : {datos[13]} \n" +
+=======
+                                f"| Id propietario  : {datos[0]:<20}  | Nombre           : {datos[1]}  \n" +
+                                f"| Apellido        : {datos[2]:<20}  | Ciudad           : {datos[3]}  \n" +
+                                f"| Dirección       : {datos[4]:<20}  | Teléfono         : {datos[5]}  \n" +
+                                f"| Es propietario  : {datos[6]:<20}  | Es veterinario   : {datos[7]}  \n" +
+                                f"| Es administrador: {datos[8]:<20}  | Email            : {datos[9]}  \n" +
+                                f"| Barrio          : {datos[11]} "
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                                 '\033[0;m')
                             print('**********************************************************************************************')
                     else:
                         print('No se encontraron resultados.')
                 if not propietario_encontrado:
+<<<<<<< HEAD
                     print("No se encontró el propietario proporcionado no existe o esta inactivo.") 
+=======
+                    print("No se encontró el propietario proporcionado.") 
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             except Exception as e:
                 print(f'Error al buscar propietario: {e}')
             finally:
                 BaseDatos.desconectar()  # Desconecta de la base de datos
         return None
+<<<<<<< HEAD
     def actualizar_estado_propietario(self, n_documento=None, nuevo_estado_acceso=None):
         if n_documento is None:
             self.set_n_documento()  
@@ -247,12 +315,20 @@ class Propietario(Usuario):
     def actualizar_propietario(self, n_documento):
     # Buscar el propietario en la base de datos usando el ID del usuario
         propietario_encontrado = self.buscar_propietario_id(n_documento)
+=======
+    def actualizar_propietario(self, id_usuario):
+    # Buscar el propietario en la base de datos usando el ID del usuario
+        propietario_encontrado = self.buscar_propietario_id(id_usuario)
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         
         if propietario_encontrado:
             # Solicitar y establecer nuevos datos del propietario
             print('Escriba los nuevos datos del propietario:')
             print('------------------------------------------')
+<<<<<<< HEAD
             self.set_tipo_documento()
+=======
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             self.set_nombre()
             self.set_apellido()
             self.set_ciudad()
@@ -265,9 +341,13 @@ class Propietario(Usuario):
             self.set_contraseña()
             self.set_barrio()
             
+<<<<<<< HEAD
             
             # Obtener los nuevos datos del propietario
             nuevo_tipo_documento = self.get_tipo_documento()
+=======
+            # Obtener los nuevos datos del propietario
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             nuevo_nombre = self.get_nombre()
             nuevo_apellido = self.get_apellido()
             nueva_ciudad = self.get_ciudad()
@@ -283,8 +363,12 @@ class Propietario(Usuario):
             # Mostrar los nuevos datos del propietario
             print('\n Datos de el propietario actualizados:')
             print('------------------------------------------')
+<<<<<<< HEAD
             print(f'Tipo de documento:{nuevo_tipo_documento}')
             print(f'N. Documento: {n_documento}')
+=======
+            print(f'Id propietario: {id_usuario}')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             print(f'Nuevo nombre: {nuevo_nombre}')
             print(f'Nuevo apellido: {nuevo_apellido}')
             print(f'Nueva ciudad: {nueva_ciudad}')
@@ -304,8 +388,12 @@ class Propietario(Usuario):
                     # Llamar al procedimiento almacenado para actualizar el propietario
                     cursor_propietario = conexion.cursor()
                     cursor_propietario.callproc('ActualizarPropietario', [
+<<<<<<< HEAD
                         nuevo_tipo_documento,
                         n_documento,
+=======
+                        id_usuario,
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                         nuevo_nombre,
                         nuevo_apellido,
                         nueva_ciudad,
@@ -330,16 +418,26 @@ class Propietario(Usuario):
                     BaseDatos.desconectar()
         else:
             # Mensaje en caso de no encontrar el propietario
+<<<<<<< HEAD
             print('Propietario no encontrado. Asegúrese de que el código ingresado sea correcto o que el propietario esté activo. Intente nuevamente.')
 
     def eliminar_propietario(self, n_documento):
+=======
+            print('Propietario no encontrado. Intente otra vez')
+
+    def eliminar_propietario(self, id_usuario):
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
         # Conectar a la base de datos
         conexion = BaseDatos.conectar()
         if conexion:
             try:
                 # Llamar al procedimiento almacenado para eliminar el propietario
                 cursor_mascota = conexion.cursor()
+<<<<<<< HEAD
                 cursor_mascota.callproc('EliminarUsuario', [n_documento])
+=======
+                cursor_mascota.callproc('EliminarPropietario', [id_usuario])
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 # Confirmar los cambios
                 conexion.commit()
                 print('Propietario borrado correctamente...')

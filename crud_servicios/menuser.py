@@ -13,15 +13,25 @@ class MenuServicios:
             print('         2- Consultar servicios  ')
             print('         3- Consultar servicios por codigo ')
             print('         4- Consultar servicios por nombre ')
+<<<<<<< HEAD
             print('         5- Activar o Inactivar Servicios')
             print('         6- Actualizar servicios ')
             print('         7- Eliminar servicios ')
             print('         8- Salir')
+=======
+            print('         5- Actualizar servicios ')
+            print('         6- Eliminar servicios ')
+            print('         7- Salir')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
             print('*************** MENU SERVICIOS ********************')
             opcion = input('Seleccione una opción: ')
             os.system("pause")
             os.system("cls")
+<<<<<<< HEAD
             if opcion == '8':
+=======
+            if opcion == '7':
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('Gracias por usar nuestra app..')
                 os.system("pause")
                 os.system("cls")
@@ -64,6 +74,7 @@ class MenuServicios:
                 os.system("cls")
             
             elif opcion == '5':
+<<<<<<< HEAD
 
                 print('         5. Activar o Inactivar Servicios -->')
                 print('****************************************************************')
@@ -76,6 +87,10 @@ class MenuServicios:
             elif opcion == '6':
                 
                 print('         6. Actualizar Servicios -->')
+=======
+                
+                print('         5. Actualizar Servicios -->')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('****************************************************************')
                 codigo= input('Ingrese el codigo del servicio a actualizar: ')
                 servicio1 = Servicios()
@@ -83,9 +98,15 @@ class MenuServicios:
                 os.system("pause")
                 os.system("cls")
             
+<<<<<<< HEAD
             elif opcion == '7':
                 
                 print('         7. Eliminar Servicios -->')
+=======
+            elif opcion == '6':
+                
+                print('         6. Eliminar Servicios -->')
+>>>>>>> 0256cca8fbd656168a9dcc2f6278819dc6a34ad6
                 print('****************************************************************')
                 codigo= input("Escriba el id del propietario a buscar: ")
                 servicio1 = Servicios()
